@@ -1,0 +1,78 @@
+{%extends "index.html" %}
+
+{% block content %}
+<main class="mdl-layout__content mdl-color--grey-100">
+      <center>
+            {% if form.errors %}
+            <p class="errorMessage">Wrong login or password. Try again.</p>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="errorMessage">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+	   <div class="mdl-card mdl-shadow--6dp">
+                <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                    <h2 class="mdl-card__title-text">Login</h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="id_{{ form.username.name }}"
+                                   name="{{ form.username.name }}"
+                                   value="{% if form.username.value != None %}{{ form.username.value }}{% endif %}" required>
+                            <label class="mdl-textfield__label " for="id_{{ form.username.name }}">User name</label>
+                            <span class="mdl-textfield__error">
+                                {% if form.username.errors %}
+                                    {% for error in form.username.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </div>
+	                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="password" id="id_{{ form.password.name }}"
+                                   name="{{ form.password.name }}"
+                                   value="{% if form.password.value != None %}{{ form.password.value }}{% endif %}" required>
+                            <label class="mdl-textfield__label " for="id_{{ form.password.name }}">Password</label>
+                            <span class="mdl-textfield__error">
+                                {% if form.password.errors %}
+                                    {% for error in form.password.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="mdl-card__actions mdl-typography--text-center">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored"
+                                    type="hidden" value="Log in" id="submit" >Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </center>
+    </main>
+
+  <!--<main class="mdl-layout__content mdl-color&#45;&#45;grey-100">-->
+        <!--{% if form.errors %}-->
+            <!--<p class="errorMessage">Wrong login or password. Try again.</p>-->
+        <!--{% endif %}-->
+        <!--{% if messages %}-->
+            <!--{% for message in messages %}-->
+                <!--<p class="errorMessage">{{ message }}</p>-->
+            <!--{% endfor %}-->
+        <!--{% endif %}-->
+        <!--<div class="centered">-->
+            <!--<form method="post" action="{% url 'login' %}">-->
+                <!--{% csrf_token %}-->
+                <!--<div class="form-user">{{ form.username.label_tag }}{{ form.username }}</div>-->
+                <!--<div class="form-user">{{ form.password.label_tag }}{{ form.password }}</div>-->
+                <!--<div class="form-user"><input type="submit" value="Log in" class="button login-button"/></div>-->
+                <!--<input type="hidden" name="next" value="{{ next }}"/>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</main>-->
+{% endblock %}

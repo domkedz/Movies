@@ -1,0 +1,82 @@
+{%extends "index.html" %}
+{% block content %}
+  <main class="mdl-layout__content mdl-color--grey-100">
+      <center>
+          {% if form.errors %}
+            <p class="errorMessage">User name exists.</p>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="errorMessage">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+	   <div class="mdl-card mdl-shadow--6dp">
+                <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                    <h2 class="mdl-card__title-text">Register</h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="id_{{ form.username.name }}"
+                                   name="{{ form.username.name }}"
+                                   value="{% if form.username.value != None %}{{ form.username.value }}{% endif %}" required>
+                            <label class="mdl-textfield__label " for="id_{{ form.username.name }}">User name</label>
+                            <span class="mdl-textfield__error">
+                                {% if form.username.errors %}
+                                    {% for error in form.username.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </div>
+	                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="email" id="id_{{ form.email.name }}"
+                                   name="{{ form.email.name }}"
+                                   value="{% if form.email.value != None %}{{ form.email.value }}{% endif %}" required>
+                            <label class="mdl-textfield__label " for="id_{{ form.email.name }}">Email</label>
+                            <span class="mdl-textfield__error">
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </div>
+	                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="password" id="id_{{ form.password1.name }}"
+                                   name="{{ form.password1.name }}"
+                                   value="{% if form.password1.value != None %}{{ form.password1.value }}{% endif %}" required>
+                            <label class="mdl-textfield__label " for="id_{{ form.password1.name }}">Password</label>
+                            <span class="mdl-textfield__error">
+                                {% if form.password1.errors %}
+                                    {% for error in form.password1.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </div>
+	                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="password" id="id_{{ form.password2.name }}"
+                                   name="{{ form.password2.name }}"
+                                   value="{% if form.password2.value != None %}{{ form.password2.value }}{% endif %}" required>
+                            <label class="mdl-textfield__label " for="id_{{ form.password2.name }}">Confirm password</label>
+                            <span class="mdl-textfield__error">
+                                {% if form.password2.errors %}
+                                    {% for error in form.password2.errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="mdl-card__actions mdl-typography--text-center">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored"
+                                    type="submit" id="submit" >Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </center>
+    </main>
+{% endblock %}

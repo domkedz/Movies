@@ -1,0 +1,83 @@
+{% load static %}
+
+{% block beforeHtml %}
+{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <script src="{% static "omdmain/js/jquery-3.4.0.js" %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="{% static "omdmain/js/material.min.js" %}"></script>
+    <link rel="stylesheet" href="{% static "omdmain/css/material.min.css" %}">
+    <link rel="stylesheet" href="{% static "omdmain/css/styles.css" %}">
+
+{% block inHead %}
+{% endblock %}
+
+</head>
+<body>
+
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    {% if messages %}
+    {% for message in messages %}
+        <div class="mdl-js-snackbar mdl-snackbar" id="message">
+            <div id="message_text" class="mdl-snackbar__text">{{ message }}</div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {# Material top bar #}
+      <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">
+            {% block header_title %}
+            {% endblock %}
+            </span>
+          <div class="mdl-layout-spacer"></div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <nav class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+	        {% if user.is_authenticated %}
+            <a class="mdl-menu__item" href="{%url 'logout'%}">Logout</a>
+            {% else %}
+            <a class="mdl-menu__item" href="{%url 'login'%}">Login</a>
+            <a class="mdl-menu__item" href="{%url 'omdmain:register'%}">Register</a>
+            {% endif %}
+          </nav>
+        </div>
+        {% block header_tabs %}
+        {% endblock %}
+      </header>
+    {# Material top bar end #}
+    {# Material left menu #}
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+          {# Navigation #}
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <a class="mdl-navigation__link" href="{% url 'omdmain:home' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
+            {% if not user.is_authenticated %}
+            <!--<a class="mdl-navigation__link" href="{% url 'omdmain:register' %}"><i class="mdl-color-text&#45;&#45;blue-grey-400 material-icons" role="presentation">how_to_reg</i>Register</a>-->
+            {% else %}
+            <a class="mdl-navigation__link" href="{% url 'omdmain:movies' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">format_list_numbered</i>Search Movies</a>
+            <a class="mdl-navigation__link" href="{% url 'omdmain:saved_movies' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">format_list_numbered</i>Saved Movies</a>
+            {% endif %}
+          <div class="mdl-layout-spacer"></div>
+          <!--<a class="mdl-navigation__link" href="{% url 'omdmain:register' %}"><i class="mdl-color-text&#45;&#45;blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">About</span></a>-->
+        </nav>
+          {# Navigation end #}
+      </div>
+    {# Material left menu end #}
+    {% block content %}
+    {% endblock %}
+</div>
+{# Material layout end #}
+{% block svgs %}
+{% endblock %}
+</body>
+</html>

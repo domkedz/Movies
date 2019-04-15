@@ -1,0 +1,10 @@
+.mdl-color--primary{
+	background-color: #37474f !important;
+}
+
+.center {
+    justify-content: center;
+    height:100%;
+    align-items: center;
+	display: flex;
+}
